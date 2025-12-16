@@ -1,0 +1,23 @@
+﻿@model NameViewModel
+@{
+    
+    ViewData["Title"] = "Home Page";
+}
+<div>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<ul>
+    @foreach(var name in Model.Names)
+    {
+        <li>@name</li>
+    }
+</ul>
+<ul>
+    @foreach(var age in Model.Ages)
+    {
+        <li>@age</li>
+    }
+</ul>
+<p>Sunday Task</p>
+<p>My name is : @ViewBag.Name</p>
+<p>My Val: @ViewBag.Val.ToString("C2")</p>

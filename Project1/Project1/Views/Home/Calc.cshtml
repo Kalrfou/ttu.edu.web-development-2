@@ -1,0 +1,52 @@
+﻿@model FutureValue
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow">
+                <div class="card-body">
+
+                    <h3 class="card-title text-center mb-4">
+                        Future Value Calculator
+                    </h3>
+
+                    <form asp-action="Calc" method="post">
+
+                        <div class="mb-3">
+                            <label class="form-label">Present Value</label>
+                            <input asp-for="PresentValue" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Interest Rate</label>
+                            <input asp-for="InterestRate" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Years</label>
+                            <input asp-for="Years" class="form-control" />
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                Calculate
+                            </button>
+                        </div>
+                    </form>
+
+                    @if (ViewBag.Result != null)
+                    {
+                        <div class="alert alert-success mt-4 text-center">
+                            <strong>Future Value:</strong>
+                            @ViewBag.Result.ToString("C2")
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
