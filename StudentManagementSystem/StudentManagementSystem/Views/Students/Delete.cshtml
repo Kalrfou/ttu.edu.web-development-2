@@ -1,0 +1,28 @@
+﻿@model StudentManagementSystem.Models.Student
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+        
+<div class="container mt-4">
+    <div class="alert alert-danger shadow-sm">
+        <h5>Confirm Deletion</h5>
+        <p>
+            Are you sure you want to delete
+            <strong>@Model.FullName</strong>?
+        </p>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">
+                Delete
+            </button>
+            <a asp-action="Index" class="btn btn-secondary">
+                Cancel
+            </a>
+        </form>
+    </div>
+</div>
+

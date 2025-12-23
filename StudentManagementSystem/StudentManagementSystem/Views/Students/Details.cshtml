@@ -1,0 +1,35 @@
+﻿@model StudentManagementSystem.Models.Student
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h4 class="mb-0">Student Details</h4>
+        </div>
+
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Full Name</dt>
+                <dd class="col-sm-9">@Model.FullName</dd>
+
+                <dt class="col-sm-3">Student ID</dt>
+                <dd class="col-sm-9">@Model.StudentNumber</dd>
+
+                <dt class="col-sm-3">Email</dt>
+                <dd class="col-sm-9">@Model.Email</dd>
+
+                <dt class="col-sm-3">Program</dt>
+                <dd class="col-sm-9">@Model.Program</dd>
+            </dl>
+        </div>
+
+        <div class="card-footer text-end">
+            <a asp-action="Edit" asp-route-id="@Model.Id"
+               class="btn btn-outline-secondary">
+                Edit
+            </a>
+            <a asp-action="Index" class="btn btn-outline-primary">
+                Back
+            </a>
+        </div>
+    </div>
+</div>

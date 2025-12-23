@@ -1,0 +1,73 @@
+﻿@model IEnumerable<StudentManagementSystem.Models.Student>
+
+<div class="container mt-4">
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h4 class="mb-0">Students</h4>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a asp-action="Create" class="btn btn-primary">
+                        + Add Student
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <!-- Search -->
+            <form asp-action="Index" method="get" class="row g-2 mb-3">
+                <div class="col-md-10">
+                    <input type="text" name="searchString"
+                           class="form-control"
+                           placeholder="Search by name or student ID or Program" />
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-outline-primary w-100">
+                        Search
+                    </button>
+                </div>
+            </form>
+
+            <!-- Table -->
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>Student ID</th>
+                        <th>Program</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.FullName</td>
+                            <td>@item.StudentNumber</td>
+                            <td>@item.Program</td>
+                            <td class="text-end">
+                                <a asp-action="Details" asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-info">
+                                    Details
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-secondary">
+                                    Edit
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-danger">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
