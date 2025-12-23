@@ -2,6 +2,7 @@
 {
     public class FutureValue
     {
+       
         public double PresentValue { get; set; }
         public double InterestRate { get; set; }
         public int Years { get; set; }
