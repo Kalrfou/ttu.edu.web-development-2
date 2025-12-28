@@ -30,4 +30,39 @@ By the end of this course, students will be able to:
 
 ---
 
-## Repository Structure
+
+---
+
+## Labs and Assignments
+- All labs and assignments are hands-on.
+- Students must follow the provided instructions and deadlines.
+- Code should be clean, well-structured, and properly commented.
+- Screenshots may be required as part of submissions.
+
+---
+
+## Student Guidelines
+- Use this repository as the main reference for the course.
+- Submit your work according to the instructions provided in each lab or assignment.
+- Push your work regularly to GitHub.
+- Follow proper coding and documentation standards.
+
+---
+
+## Academic Integrity
+All submitted work must be original.  
+Plagiarism or academic misconduct will be handled according to **Tafila Technical University regulations**.
+
+---
+
+## Instructor
+**Dr. Khaled Alrfou**  
+Assistant Professor – Computer Science  
+Tafila Technical University
+
+---
+
+## Notes
+- This repository may be updated throughout the semester.
+- Students are responsible for checking updates regularly.
+
