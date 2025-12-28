@@ -1,0 +1,15 @@
+﻿@model Guitar
+
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="id" />
+
+
+    <input asp-for="Manufacturer" />
+    <input asp-for="ModelName" />
+    <input asp-for="YearMade" />
+    <input asp-for="Price" />
+
+
+    <button type="submit">Save</button>
+</form>

@@ -1,0 +1,38 @@
+﻿@model Guitar
+
+
+<form asp-action="Create" method="post" enctype="multipart/form-data" class="card p-4 shadow-sm">
+
+
+    <div class="mb-3">
+        <label asp-for="Manufacturer" class="form-label"></label>
+        <input asp-for="Manufacturer" class="form-control" />
+    </div>
+
+
+    <div class="mb-3">
+        <label asp-for="ModelName" class="form-label"></label>
+        <input asp-for="ModelName" class="form-control" />
+    </div>
+
+
+    <div class="mb-3">
+        <label asp-for="YearMade" class="form-label"></label>
+        <input asp-for="YearMade" class="form-control" />
+    </div>
+
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" />
+    </div>
+
+
+    <div class="mb-3">
+        <label class="form-label">Guitar Image</label>
+        <input type="file" name="imageFile" class="form-control" />
+    </div>
+
+
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
