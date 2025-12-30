@@ -1,0 +1,30 @@
+﻿@model Guitar
+
+<h2 class="fw-bold mb-4">Guitar Details</h2>
+
+<div class="card shadow-sm">
+
+    @if (!string.IsNullOrEmpty(Model.ImagePath))
+    {
+        <img src="@Model.ImagePath"
+             class="card-img-top"
+             style="height:300px; object-fit:cover;"
+             alt="Guitar Image" />
+    }
+
+    <div class="card-body">
+        <h4 class="card-title">@Model.Manufacturer</h4>
+
+        <p class="card-text">
+            <strong>Model:</strong> @Model.ModelName <br />
+            <strong>Year Made:</strong> @Model.YearMade <br />
+            <strong>Price:</strong> $@Model.Price
+        </p>
+    </div>
+
+    <div class="card-footer d-flex justify-content-between">
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        <a asp-action="Edit" asp-route-id="@Model.id" class="btn btn-primary">Edit</a>
+    </div>
+
+</div>

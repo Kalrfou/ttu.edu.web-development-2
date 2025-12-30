@@ -1,5 +1,6 @@
 ﻿using GuitarManager.data;
 using GuitarManager.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,10 +20,12 @@ namespace GuitarManager.Controllers
             return View(await _context.Guitars.ToListAsync());
         }
         // CREATE
+        [Authorize(Roles = "Admin")]
         public IActionResult Create() => View();
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(Guitar guitar, IFormFile imageFile)
         {
             // 1️⃣ Validate model (data annotations)
@@ -64,6 +67,7 @@ namespace GuitarManager.Controllers
         }
 
         // EDIT
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var guitar = await _context.Guitars.FindAsync(id);
@@ -73,6 +77,7 @@ namespace GuitarManager.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(Guitar guitar)
         {
             if (!ModelState.IsValid)
@@ -86,6 +91,7 @@ namespace GuitarManager.Controllers
 
 
         // DELETE
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var guitar = await _context.Guitars.FindAsync(id);
@@ -95,6 +101,7 @@ namespace GuitarManager.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var guitar = await _context.Guitars.FindAsync(id);
@@ -105,5 +112,17 @@ namespace GuitarManager.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+        // DETAILS (READ – Single Record)
+        public async Task<IActionResult> Details(int id)
+        {
+            // Retrieve guitar by primary key
+            var guitar = await _context.Guitars.FindAsync(id);
+
+            if (guitar == null)
+                return NotFound();
+
+            return View(guitar);
+        }
+
     }
 }

@@ -1,34 +1,53 @@
-using GuitarManager.data;
+﻿using GuitarManager.data;
+using GuitarManager.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+// Connection string
+var connectionString = builder.Configuration.GetConnectionString("GuitarDbContextConnection")
+    ?? throw new InvalidOperationException("Connection string 'GuitarDbContextConnection' not found.");
+
+// Database
 builder.Services.AddDbContext<GuitarDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("GuitarDbContext")));
+    options.UseSqlServer(connectionString));
+
+// MVC + Razor Pages
+builder.Services.AddControllersWithViews();   // ✅ REQUIRED
+builder.Services.AddRazorPages();             // ✅ REQUIRED FOR IDENTITY
+
+// Identity
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+})
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<GuitarDbContext>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Error handling
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();        // ✅ REQUIRED
+
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication();     // 🔑 FIRST
+app.UseAuthorization();      // 🔐 SECOND
 
-app.MapStaticAssets();
-
+// MVC routing
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Guitars}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=Guitars}/{action=Index}/{id?}");
 
+// Razor Pages routing (IDENTITY)
+app.MapRazorPages();         // 🔑 REQUIRED
 
 app.Run();

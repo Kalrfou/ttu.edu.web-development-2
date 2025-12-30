@@ -1,15 +1,48 @@
 ﻿@model Guitar
 
+<h2 class="fw-bold mb-4">Edit Guitar</h2>
 
-<form asp-action="Edit" method="post">
+<form asp-action="Edit" method="post" class="card shadow-sm p-4">
+
+    <!-- Hidden field for primary key -->
     <input type="hidden" asp-for="id" />
 
+    <div class="mb-3">
+        <label asp-for="Manufacturer" class="form-label"></label>
+        <input asp-for="Manufacturer" class="form-control" />
+        <span asp-validation-for="Manufacturer" class="text-danger"></span>
+    </div>
 
-    <input asp-for="Manufacturer" />
-    <input asp-for="ModelName" />
-    <input asp-for="YearMade" />
-    <input asp-for="Price" />
+    <div class="mb-3">
+        <label asp-for="ModelName" class="form-label"></label>
+        <input asp-for="ModelName" class="form-control" />
+        <span asp-validation-for="ModelName" class="text-danger"></span>
+    </div>
 
+    <div class="mb-3">
+        <label asp-for="YearMade" class="form-label"></label>
+        <input asp-for="YearMade" class="form-control" />
+        <span asp-validation-for="YearMade" class="text-danger"></span>
+    </div>
 
-    <button type="submit">Save</button>
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <!-- Show existing image -->
+    @if (!string.IsNullOrEmpty(Model.ImagePath))
+    {
+        <div class="mb-3">
+            <label class="form-label">Current Image</label><br />
+            <img src="@Model.ImagePath" class="img-thumbnail" style="max-height:200px;" />
+        </div>
+    }
+
+    <div class="d-flex justify-content-between mt-4">
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary">Update Guitar</button>
+    </div>
+
 </form>

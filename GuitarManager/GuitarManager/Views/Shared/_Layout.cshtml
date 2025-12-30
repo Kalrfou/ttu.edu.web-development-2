@@ -1,50 +1,184 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - GuitarManager</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/GuitarManager.styles.css" asp-append-version="true" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GuitarManager</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Guitars" asp-action="Index">Index</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
+    <title>@ViewData["Title"] - GuitarManager</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Custom Site CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+
+    <!-- ================= NAVBAR ================= -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
         <div class="container">
-            &copy; 2025 - GuitarManager - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+            <!-- Brand -->
+            <a class="navbar-brand fw-bold"
+               asp-controller="Guitars"
+               asp-action="Index">
+                🎸 GuitarManager
+            </a>
+
+            <!-- Mobile Toggle -->
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#mainNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+
+                <!-- LEFT MENU -->
+                <ul class="navbar-nav me-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           asp-controller="Guitars"
+                           asp-action="Index">
+                            Guitars
+                        </a>
+                    </li>
+
+                    @* Authenticated users *@
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               asp-controller="Guitars"
+                               asp-action="Create">
+                                Add Guitar
+                            </a>
+                        </li>
+                    }
+
+                    @* Admin-only menu *@
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"
+                               role="button"
+                               data-bs-toggle="dropdown">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-controller="Admin"
+                                       asp-action="Users">
+                                        Manage Users
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-controller="Admin"
+                                       asp-action="Roles">
+                                        Manage Roles
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+
+                <!-- RIGHT MENU -->
+                <ul class="navbar-nav ms-auto align-items-center">
+
+                    <!-- 🌙 Theme Toggle -->
+                    <li class="nav-item me-3">
+                        <button id="themeToggle"
+                                class="btn btn-outline-light btn-sm">
+                            🌙
+                        </button>
+                    </li>
+
+                    @* AUTHENTICATED *@
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item me-3">
+                            <span class="navbar-text text-light">
+                                Hello, @User.Identity.Name
+                            </span>
+                        </li>
+
+                        <li class="nav-item">
+                            <form asp-area="Identity"
+                                  asp-page="/Account/Logout"
+                                  method="post">
+                                <button type="submit"
+                                        class="btn btn-outline-light btn-sm">
+                                    Logout
+                                </button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item me-2">
+                            <a class="btn btn-outline-light btn-sm"
+                               asp-area="Identity"
+                               asp-page="/Account/Login">
+                                Login
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="btn btn-outline-warning btn-sm"
+                               asp-area="Identity"
+                               asp-page="/Account/Register">
+                                Register
+                            </a>
+                        </li>
+                    }
+                </ul>
+
+            </div>
         </div>
+    </nav>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="container my-4 flex-fill">
+        @RenderBody()
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="border-top bg-white text-center py-3">
+        <small class="text-muted">
+            © 2025 GuitarManager | ASP.NET Core MVC · EF Core · SQL Server
+        </small>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <!-- ================= SCRIPTS ================= -->
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- 🌙 Dark / Light Mode with Persistence -->
+    <script>
+        const html = document.documentElement;
+        const toggleBtn = document.getElementById('themeToggle');
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            html.setAttribute('data-bs-theme', savedTheme);
+            toggleBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            const current = html.getAttribute('data-bs-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-bs-theme', next);
+            localStorage.setItem('theme', next);
+            toggleBtn.textContent = next === 'dark' ? '☀️' : '🌙';
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
